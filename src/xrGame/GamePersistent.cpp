@@ -33,6 +33,7 @@
 #include "ui/UILoadingScreen.h"
 #include "AnselManager.h"
 #include "xrCore/Threading/TaskManager.hpp"
+#include "saved_game_wrapper.h"
 
 #include "xrPhysics/IPHWorld.h"
 
@@ -45,6 +46,8 @@
 #endif // _EDITOR
 
 #include "xrEngine/xr_level_controller.h"
+
+extern string_path g_last_saved_game;
 
 CGamePersistent::CGamePersistent()
 {
@@ -385,17 +388,35 @@ bool allow_intro()
     if ((0 != strstr(Core.Params, "-nointro")))
         return false;
 
+    if (pSettingsOpenXRay && pSettingsOpenXRay->read_if_exists<bool>("startup", "skip_logo_intro", false))
+        return false;
+
     return true;
 }
 
 bool allow_game_intro()
 {
-    return !strstr(Core.Params, "-nogameintro");
+    if (strstr(Core.Params, "-nogameintro"))
+        return false;
+
+    return !(pSettingsOpenXRay && pSettingsOpenXRay->read_if_exists<bool>("startup", "skip_game_intro", false));
+}
+
+bool allow_autoload_last_save()
+{
+    return pSettingsOpenXRay && pSettingsOpenXRay->read_if_exists<bool>("startup", "autoload_last_save", false);
 }
 
 void CGamePersistent::start_logo_intro()
 {
     const bool notLoadingLevel = xr_strlen(m_game_params.m_game_or_spawn) == 0 && g_pGameLevel == nullptr;
+    if (notLoadingLevel && allow_autoload_last_save() && *g_last_saved_game && CSavedGameWrapper::valid_saved_game(g_last_saved_game))
+    {
+        m_intro_event = nullptr;
+        Console->Execute("load_last_save");
+        return;
+    }
+
     if (!allow_intro())
     {
         m_intro_event = nullptr;
