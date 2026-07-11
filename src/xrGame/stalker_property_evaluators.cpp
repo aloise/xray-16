@@ -424,7 +424,7 @@ _value_type CStalkerPropertyEvaluatorShouldThrowGrenade::evaluate()
         return (false);
 
     // do not throw grenades too often
-    if (object().last_throw_time() + object().throw_time_interval() >= Device.dwTimeGlobal)
+    if (Device.dwTimeGlobal - object().last_throw_time() <= object().throw_time_interval())
         return (false);
 
     // throw grenades only in case when we have them

@@ -230,9 +230,9 @@ void CStalkerCombatPlanner::add_evaluators()
     add_evaluator(eWorldPropertyCriticallyWounded,
         xr_new<CStalkerPropertyEvaluatorMember>(&object().brain().CStalkerPlanner::m_storage,
             eWorldPropertyCriticallyWounded, true, true, "critically wounded"));
-    add_evaluator(
-        eWorldPropertyKilledWounded, xr_new<CStalkerPropertyEvaluatorMember>(&object().brain().CStalkerPlanner::m_storage,
-                                         eWorldPropertyKilledWounded, true, true, "killed critically wounded"));
+    add_evaluator(eWorldPropertyKilledWounded,
+        xr_new<CStalkerPropertyEvaluatorMember>((CPropertyStorage*)0, eWorldPropertyKilledWounded, true, true,
+            "killed critically wounded"));
 
     add_evaluator(eWorldPropertyShouldThrowGrenade,
         xr_new<CStalkerPropertyEvaluatorShouldThrowGrenade>(m_object, "should throw grenade"));
