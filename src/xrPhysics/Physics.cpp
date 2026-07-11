@@ -33,8 +33,8 @@ extern const u16 max_joint_allowed_for_exeact_integration = 30;
 
 // base	params
 const float base_fixed_step = 0.02f;
-const float base_erp = 0.54545456f;
-const float base_cfm = 1.1363636e-006f;
+const float base_erp = 0.7f;
+const float base_cfm = 0.0000005f;
 // base params
 float fixed_step = 0.001f;
 float world_cfm = CFM(SPRING_S(base_cfm, base_erp, base_fixed_step), DAMPING(base_cfm, base_erp));
@@ -46,7 +46,7 @@ const float default_world_gravity = 2 * 9.81f;
 
 /////////////////////////////////////////////////////
 
-int phIterations = 18;
+int phIterations = 30;
 float phTimefactor = 1.f;
 // float		phBreakCommonFactor										= 0.01f;
 // float		phRigidBreakWeaponFactor								= 1.f;

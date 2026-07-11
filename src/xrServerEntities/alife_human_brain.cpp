@@ -41,17 +41,21 @@ CALifeHumanBrain::CALifeHumanBrain(object_type* object) : inherited(object)
     m_cpEquipmentPreferences.resize(5);
     m_cpMainWeaponPreferences.resize(4);
 
-    m_cpEquipmentPreferences.resize(iFloor(ai().ef_storage().m_pfEquipmentType->ffGetMaxResultValue() + .5f));
-    m_cpMainWeaponPreferences.resize(iFloor(ai().ef_storage().m_pfMainWeaponType->ffGetMaxResultValue() + .5f));
     R_ASSERT2((iFloor(ai().ef_storage().m_pfEquipmentType->ffGetMaxResultValue() + .5f) == 5) &&
             (iFloor(ai().ef_storage().m_pfMainWeaponType->ffGetMaxResultValue() + .5f) == 4),
         "Recompile Level Editor and xrAI and rebuild file \"game.spawn\"!");
 
-    for (int i = 0, n = m_cpEquipmentPreferences.size(); i < n; ++i)
-        m_cpEquipmentPreferences[i] = u8(::Random.randI(3));
+    {
+        auto* eq = m_cpEquipmentPreferences.begin();
+        for (int i = 0, n = m_cpEquipmentPreferences.size(); i < n; ++i)
+            eq[i] = u8(::Random.randI(3));
+    }
 
-    for (int i = 0, n = m_cpMainWeaponPreferences.size(); i < n; ++i)
-        m_cpMainWeaponPreferences[i] = u8(::Random.randI(3));
+    {
+        auto* wp = m_cpMainWeaponPreferences.begin();
+        for (int i = 0, n = m_cpMainWeaponPreferences.size(); i < n; ++i)
+            wp[i] = u8(::Random.randI(3));
+    }
 }
 
 CALifeHumanBrain::~CALifeHumanBrain()

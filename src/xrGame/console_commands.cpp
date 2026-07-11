@@ -1184,7 +1184,7 @@ public:
 class CCC_PHIterations : public CCC_Integer
 {
 public:
-    CCC_PHIterations(LPCSTR N) : CCC_Integer(N, &phIterations, 15, 50){};
+    CCC_PHIterations(LPCSTR N) : CCC_Integer(N, &phIterations, 1, 200){};
     virtual void Execute(LPCSTR args)
     {
         CCC_Integer::Execute(args);
