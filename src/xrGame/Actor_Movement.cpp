@@ -219,13 +219,14 @@ void CActor::g_cl_CheckControls(u32 mstate_wf, Fvector& vControlAccel, float& Ju
 
         if (CanJump() && (mstate_wf & mcJump))
         {
+            float jumpSpeed = m_fJumpSpeed;
             CBackpack* backpack = GetBackpack();
             if (backpack)
-                m_fJumpSpeed *= backpack->m_fJumpSpeed;
+                jumpSpeed *= backpack->m_fJumpSpeed;
 
             mstate_real |= mcJump;
             m_bJumpKeyPressed = TRUE;
-            Jump = m_fJumpSpeed;
+            Jump = jumpSpeed;
             m_fJumpTime = s_fJumpTime;
 
             //уменьшить силу игрока из-за выполненого прыжка
